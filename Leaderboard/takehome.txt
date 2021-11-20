@@ -1,0 +1,59 @@
+Criteria:
+- high level architecture design
+- tech stack selection
+- ERD / high level data design
+- high level infrastructure design
+- scalable
+- fault tolerant
+- unit tests and integration tests
+
+
+details:
+- join a leaderboard
+- most gems are on the top of the leaderboard
+- each leaderboard has 20 players
+- all 100 million players are put into leaderboards
+
+services needed:
+- add player to leaderboard
+	- input: player ID
+	- response: success/failure code
+
+
+architecture:
+- api gateway 
+	- edge optimized
+	- use a lambda function as a Custom Authorizer to authorize request
+
+- lambda (scalable): 
+	- can use provisioned concurrency to reduce latency during scaling (increase cost for lower latency)
+	- select player record for this ID to see if already part of a leaderboard
+	- if already part of leaderboard, return errorCode
+	- if not: 
+		- select a leaderboard from leaderboards_vw view
+		- increase the numPLayers count by 1
+		- add playerId to players[]
+		- update leaderboard record
+		- update player_leaderboard record with new leaderboardId
+		- return success code
+
+- SQS queue: 
+	- take in playerId
+	- 
+
+
+database:
+- player_leaderboard table:
+	- player id, leaderboard id, numGems
+	- index by playerId
+
+- leaderboards table:
+	- fields: leaderboardId, numPlayers, players[]
+	- index by leaderboardID
+	- starts empty
+	- new leaderboards are added as needed
+
+- available_leaderboard_vw view:
+	- select * from leaderboards where numPlayers is < 20 order by leaderboardId
+
+- leaderboard_vw
