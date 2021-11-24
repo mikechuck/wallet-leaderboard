@@ -1,5 +1,9 @@
-def getUserFromAuth(header):
-	# retrieving user information from auth
-	return {
-		"player_id": 123456
-	}
+def getUserFromAuth(headers):
+	if (headers.get("Authorization")):
+		# Retrieving user information from provider
+		#  ...
+		return {
+			"player_id": 123456
+		}
+	else:
+		return {}

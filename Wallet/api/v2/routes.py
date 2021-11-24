@@ -4,27 +4,18 @@
 import json
 import uuid
 from pymongo import MongoClient
-from bson.objectid import ObjectId
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
+from ..common import getUserFromAuth
 
 client = MongoClient("mongodb://localhost:27017")
 db = client.Wallets
 playersCollection = db["Players"]
 walletsCollection = db["Wallets"]
 
-app = Flask(__name__)
+# Register api
+api = Blueprint('v2', __name__)
 
-def getUserFromAuth(headers):
-	if (headers.get("Authorization")):
-		# Retrieving user information from provider
-		#  ...
-		return {
-			"player_id": 123456
-		}
-	else:
-		return {}
-
-@app.route('/wallets', methods=['POST'])
+@api.route('/wallets', methods=['POST'])
 def createWallet():
 	# Validate authorization
 	playerId = getUserFromAuth(request.headers).get("player_id")
@@ -62,8 +53,7 @@ def createWallet():
 		return {"Message": "Internal Error"}, 500
 
 
-
-@app.route('/wallets/items', methods=['POST'])
+@api.route('/wallets/items', methods=['POST'])
 def addItemToWallet():
 	# Validate authorizations
 	playerId = getUserFromAuth(request.headers).get("player_id")
@@ -108,7 +98,7 @@ def addItemToWallet():
 		return {"Message": "Internal Error"}, 500
 
 
-@app.route('/wallets/<walletId>/items/<itemId>', methods=['GET'])
+@api.route('/wallets/<walletId>/items/<itemId>', methods=['GET'])
 def getItemFromWallet(walletId, itemId):
 	# Validate authorization
 	playerId = getUserFromAuth(request.headers).get("player_id")
@@ -143,5 +133,3 @@ def getItemFromWallet(walletId, itemId):
 		return returnItem, 200
 	except:
 		return {"Message": "Internal Error"}, 500
-
-app.run(debug=True)
