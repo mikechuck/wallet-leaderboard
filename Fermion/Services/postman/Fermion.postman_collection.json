@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "d66e73c2-8f75-4064-9986-f9e4bad8912d",
+		"name": "Fermion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"player_name\": \"postman user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hdpw9n3dz9.execute-api.us-east-2.amazonaws.com/v1/users",
+					"protocol": "https",
+					"host": [
+						"hdpw9n3dz9",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Leaderboard",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://hdpw9n3dz9.execute-api.us-east-2.amazonaws.com/v1/leaderboards/78914fd0-bee1-4a03-99b5-06426ba66bd3",
+					"protocol": "https",
+					"host": [
+						"hdpw9n3dz9",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"v1",
+						"leaderboards",
+						"78914fd0-bee1-4a03-99b5-06426ba66bd3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Score",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"player_id\": \"79af47dd-a126-4546-914a-469a072eccbf\",\r\n    \"score\": \"12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hdpw9n3dz9.execute-api.us-east-2.amazonaws.com/v1/users/score",
+					"protocol": "https",
+					"host": [
+						"hdpw9n3dz9",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"v1",
+						"users",
+						"score"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

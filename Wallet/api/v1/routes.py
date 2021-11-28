@@ -5,7 +5,7 @@ import json
 import uuid
 from pymongo import MongoClient
 from flask import Flask, request, jsonify, Blueprint
-from ..common import getUserFromAuth
+from ..common import authenticateUser
 
 client = MongoClient("mongodb://localhost:27017")
 db = client.Wallets
@@ -18,7 +18,7 @@ api = Blueprint('v1', __name__)
 @api.route('/wallets', methods=['POST'])
 def createWallet():
 	# Validate authorization
-	playerId = getUserFromAuth(request.headers).get("player_id")
+	playerId = authenticateUser(request.headers).get("player_id")
 	if (not playerId):
 		return {"Message": "Missing authorization"}, 403
 
@@ -56,7 +56,7 @@ def createWallet():
 @api.route('/wallets/items', methods=['POST'])
 def addItemToWallet():
 	# Validate authorizations
-	playerId = getUserFromAuth(request.headers).get("player_id")
+	playerId = authenticateUser(request.headers).get("player_id")
 	if (not playerId):
 		return {"Message": "Missing authorization"}, 403
 
@@ -101,7 +101,7 @@ def addItemToWallet():
 @api.route('/wallets/<walletId>/items/<itemId>', methods=['GET'])
 def getItemFromWallet(walletId, itemId):
 	# Validate authorization
-	playerId = getUserFromAuth(request.headers).get("player_id")
+	playerId = authenticateUser(request.headers).get("player_id")
 	if (not playerId):
 		return {"Message": "Missing authorization"}, 403
 

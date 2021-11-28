@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "b7f65f4c-b5ab-42b3-afda-3fb378d06952",
+		"name": "Wallets",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Wallet",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "26285050-51fb-4553-baee-42390f172af5",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"wallet_name\": \"New Wallet\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/wallets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Item to Wallet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "26285050-51fb-4553-baee-42390f172af5",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"wallet_id\": \"02ae3244-9a1c-4b2b-933f-5aaa266390ed\",\r\n    \"item_name\": \"New Item\",\r\n    \"item_price\": \"3 Gold\",\r\n    \"item_color\": \"Green\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/wallets/items",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"wallets",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item from Wallet",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "26285050-51fb-4553-baee-42390f172af5",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/wallets/62d5e04f-3fcb-4c54-a27f-ee5af98b79cb/items/d9063308-f567-4f47-bace-f290f655a3b3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"wallets",
+						"62d5e04f-3fcb-4c54-a27f-ee5af98b79cb",
+						"items",
+						"d9063308-f567-4f47-bace-f290f655a3b3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

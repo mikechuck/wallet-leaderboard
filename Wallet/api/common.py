@@ -1,4 +1,4 @@
-def getUserFromAuth(headers):
+def authenticateUser(headers):
 	if (headers.get("Authorization")):
 		# Retrieving user information from provider
 		#  ...
