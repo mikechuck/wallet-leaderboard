@@ -4,7 +4,7 @@ from api.v2 import routes as api_v2
 
 app = Flask(__name__)
 
-@app.before_request
+@app.after_request
 def logging(response):
     # Function runs for every request,
     # add any logging here
