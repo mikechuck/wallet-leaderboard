@@ -1,27 +1,20 @@
-
-# this should work for different versions of the mobile game client (playing v1 and v2 of the game)
-
 import json
 import uuid
 from pymongo import MongoClient
-from flask import Flask, request, jsonify, Blueprint
-from ..common import authenticateUser
+from flask import request, Blueprint
+from .wrappers.authenticate import authenticate
 
 client = MongoClient("mongodb://localhost:27017")
 db = client.Wallets
 playersCollection = db["Players"]
 walletsCollection = db["Wallets"]
 
-# Register api
+# Create blueprint for this api version
 api = Blueprint('v2', __name__)
 
 @api.route('/wallets', methods=['POST'])
-def createWallet():
-	# Validate authorization
-	playerId = authenticateUser(request.headers).get("player_id")
-	if (not playerId):
-		return {"Message": "Missing authorization"}, 403
-
+@authenticate
+def createWallet(playerId):
 	# Input body params
 	eventBody = json.loads(request.data)
 	walletName = eventBody.get("wallet_name")
@@ -54,12 +47,8 @@ def createWallet():
 
 
 @api.route('/wallets/items', methods=['POST'])
-def addItemToWallet():
-	# Validate authorizations
-	playerId = authenticateUser(request.headers).get("player_id")
-	if (not playerId):
-		return {"Message": "Missing authorization"}, 403
-
+@authenticate
+def addItemToWallet(playerId):
 	# Input body params
 	eventBody = json.loads(request.data)
 	walletId = eventBody.get("wallet_id")
@@ -99,12 +88,8 @@ def addItemToWallet():
 
 
 @api.route('/wallets/<walletId>/items/<itemId>', methods=['GET'])
-def getItemFromWallet(walletId, itemId):
-	# Validate authorization
-	playerId = authenticateUser(request.headers).get("player_id")
-	if (not playerId):
-		return {"Message": "Missing authorization"}, 403
-
+@authenticate
+def getItemFromWallet(playerId, walletId, itemId):
 	# Validate input fields
 	if not walletId or not itemId:
 		return {"Message": "Missing fields: wallet_id or item_id"}, 400

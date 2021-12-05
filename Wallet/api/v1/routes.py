@@ -1,10 +1,7 @@
-
-# this should work for different versions of the mobile game client (playing v1 and v2 of the game)
-
 import json
 import uuid
 from pymongo import MongoClient
-from flask import Flask, request, jsonify, Blueprint
+from flask import request, Blueprint
 from ..common import authenticateUser
 
 client = MongoClient("mongodb://localhost:27017")
@@ -12,7 +9,7 @@ db = client.Wallets
 playersCollection = db["Players"]
 walletsCollection = db["Wallets"]
 
-# Register api
+# Create blueprint for this api version
 api = Blueprint('v1', __name__)
 
 @api.route('/wallets', methods=['POST'])
